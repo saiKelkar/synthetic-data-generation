@@ -1,1 +1,28 @@
+
 *.skb
+*.skp
+*.obj
+*.mtl
+*.fbx
+*.blend
+*.blend1
+*.hdr
+base-file/
+assets/ 
+
+# --- Generated Data ---
+*.png
+*.jpg
+output/
+dataset/
+
+# --- Python & OS Junk ---
+__pycache__/ 
+*.pyc
+Thumbs.db
+.vscode/
+
+# --- YOLO Training Artifact ---
+runs/
+*.pt
+
