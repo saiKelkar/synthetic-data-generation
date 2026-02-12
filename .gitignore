@@ -8,7 +8,6 @@
 *.blend1
 *.hdr
 base-file/
-assets/ 
 
 # --- Generated Data ---
 *.png
