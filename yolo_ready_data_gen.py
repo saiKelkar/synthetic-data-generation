@@ -7,7 +7,7 @@ import os
 import mathutils
 
 OUTPUT_PATH = "E:/synthetic-data-generation/Helmet_Dataset/"
-TOTAL_IMAGES = 10
+TOTAL_IMAGES = 1000
 
 scene = bpy.context.scene
 
@@ -63,22 +63,17 @@ def toggle_helmet():
 def randomize_lighting():
     world = bpy.context.scene.world
     if world and world.use_nodes:
-        bg_node = world.node_tree.nodes.get("Background")
-        if bg_node:
-            bg_node.inputs[1].default_value = random.uniform(0.4, 2.5)
-    for obj in bpy.data.objects:
-        if obj.type == 'LIGHT':
-            obj.data.color = (
-                random.uniform(0.8, 1.0),
-                random.uniform(0.8, 1.0),
-                random.uniform(0.8, 1.0)
-            )
-            if obj.data.type == 'SUN':
-                obj.data.energy = random.uniform(0.5, 4.0)
-                obj.rotation_euler[0] = random.uniform(0, math.pi)
-                obj.rotation_euler[2] = random.uniform(0, 2 * math.pi)
-            else:
-                obj.data.energy = random.uniform(100.0, 1500.0)
+        sky_node = None
+        for node in world.node_tree.nodes:
+            if node.type == 'TEX_SKY':
+                sky_node = node
+                break
+        if sky_node:
+            sky_node.sky_type = 'NISHITA'
+            sky_node.sun_elevation = random.uniform(0.26, 1.4)
+            sky_node.sun_rotation = random.uniform(0, 2 * math.pi)
+            sky_node.dust_density = random.uniform(0.0, 5.0)
+            sky_node.air_density = random.uniform(1.0, 2.0)
 
 for i in range(TOTAL_IMAGES):
     randomize_camera()
@@ -98,4 +93,5 @@ for i in range(TOTAL_IMAGES):
     with open(os.path.join(OUTPUT_PATH, filename_base + ".txt"), "w") as f:
         f.write(label_line)
     print(f"Generated {filename_base}")
+
 print("Batch complete!")
