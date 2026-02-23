@@ -46,7 +46,7 @@ def get_bounding_box(obj, camera):
 
 def randomize_camera():
     radius = random.uniform(4.0, 7.0)
-    angle = random.uniform(0.2 * math.pi)
+    angle = random.uniform(0, 2 * math.pi)
     height_offset = random.uniform(0.5, 2.5)
     x = radius * math.cos(angle)
     y = radius * math.sin(angle)
@@ -60,13 +60,33 @@ def toggle_helmet():
     helmet_obj.hide_viewport = not is_safe
     return is_safe
 
+def randomize_lighting():
+    world = bpy.context.scene.world
+    if world and world.use_nodes:
+        bg_node = world.node_tree.nodes.get("Background")
+        if bg_node:
+            bg_node.inputs[1].default_value = random.uniform(0.4, 2.5)
+    for obj in bpy.data.objects:
+        if obj.type == 'LIGHT':
+            obj.data.color = (
+                random.uniform(0.8, 1.0),
+                random.uniform(0.8, 1.0),
+                random.uniform(0.8, 1.0)
+            )
+            if obj.data.type == 'SUN':
+                obj.data.energy = random.uniform(0.5, 4.0)
+                obj.rotation_euler[0] = random.uniform(0, math.pi)
+                obj.rotation_euler[2] = random.uniform(0, 2 * math.pi)
+            else:
+                obj.data.energy = random.uniform(100.0, 1500.0)
+
 for i in range(TOTAL_IMAGES):
     randomize_camera()
+    randomize_lighting()
     has_helmet = toggle_helmet()
     bpy.context.view_layer.update()
     label_line = "" 
     label_suffix = "unsafe"
-
     if has_helmet:
         label_suffix = "safe"
         yolo_data = get_bounding_box(helmet_obj, camera_obj)
