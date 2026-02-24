@@ -12,6 +12,7 @@ base-file/
 # --- Generated Data ---
 *.png
 *.jpg
+*.txt
 output/
 dataset/
 
