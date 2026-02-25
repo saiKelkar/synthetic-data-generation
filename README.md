@@ -14,10 +14,13 @@ This project solves that by creating a "Data Factory" in Blender that generates 
 
 ## 📊 Results
 - **Training Set:** 1,000 synthetic images.
-- **Validation:** 80/20 split with high mAP scores in controlled environments.
+- **Validation:** 80/20 split with 0.995 mAP50 score and 1.0 Recall on the synthetic validation set, demonstrating severe overfitting to synthetic artifacts when tested against real-world domain shifts. 
 - **Challenge:** Identified color bias in initial training (Grey vs. Yellow helmets) and a demographic bias (trained on a single character model), providing a roadmap for future iterations using material randomization.
 
 ## 🔮 Future Work
 - **Domain Randomization:** Implement material randomization for helmet colors to decouple "shape" from "color".
 - **Demographic Expansion:** Integrate a broader range of human 3D models (varying skin tones, builds, and heights) to eliminate algorithmmic bias.
 - **Scale Variation:** Randomize worker distance and background complexity to improve performance on frone and CCTV footage. 
+
+## 💻 Tech Stack
+Python, Blender Python API (bpy), YOLOv8 (Ultralytics)
