@@ -21,6 +21,9 @@ __pycache__/
 *.pyc
 Thumbs.db
 .vscode/
+.venv/
+venv/
+env/
 
 # --- YOLO Training Artifact ---
 runs/
