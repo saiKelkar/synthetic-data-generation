@@ -1,0 +1,6 @@
+
+path: /mnt/e/synthetic-data-generation/YOLO_Data
+train: train/images
+val: val/images
+names: 
+    0: Helmet
